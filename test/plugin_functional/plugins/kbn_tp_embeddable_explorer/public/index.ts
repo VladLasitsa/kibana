@@ -17,4 +17,14 @@
  * under the License.
  */
 
-import './np_ready/public/legacy';
+import { PluginInitializer } from 'kibana/public';
+import {
+  EmbeddableExplorerPublicPlugin,
+  EmbeddableExplorerSetup,
+  EmbeddableExplorerStart,
+} from './plugin';
+
+export { EmbeddableExplorerPublicPlugin as Plugin };
+
+export const plugin: PluginInitializer<EmbeddableExplorerSetup, EmbeddableExplorerStart> = () =>
+  new EmbeddableExplorerPublicPlugin();

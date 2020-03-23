@@ -17,7 +17,11 @@
  * under the License.
  */
 
-export * from './types';
-export * from './search_embeddable_factory';
-export * from './search_embeddable';
-export * from './constants';
+export * from '../../../../../src/plugins/embeddable/public';
+export * from '../../../../../src/plugins/embeddable/public/lib/test_samples';
+export {
+  HELLO_WORLD_EMBEDDABLE,
+  HelloWorldEmbeddableFactory,
+} from '../../../../../examples/embeddable_examples/public';
+export * from '../../../../../src/legacy/core_plugins/visualizations/public/np_ready/public/embeddable';
+//export * from '../../../../../src/legacy/core_plugins/kibana/public/discover/np_ready/embeddable';

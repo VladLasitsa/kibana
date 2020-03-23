@@ -19,7 +19,7 @@
 
 import React from 'react';
 import { EuiFlyout, EuiFlexGroup, EuiFlexItem, EuiBadge } from '@elastic/eui';
-import { CoreStart } from 'src/core/public';
+import { CoreSetup } from 'src/core/public';
 import { createAction, ActionByType } from '../../actions';
 import { toMountPoint, reactToUiComponent } from '../../../../kibana_react/public';
 import { ActionType } from '../../types';
@@ -42,13 +42,14 @@ const UiMenuItem = reactToUiComponent(ReactMenuItem);
 export const ACTION_HELLO_WORLD = 'ACTION_HELLO_WORLD' as ActionType;
 
 export function createHelloWorldAction(
-  overlays: CoreStart['overlays']
+  getStartServices: CoreSetup['getStartServices']
 ): ActionByType<typeof ACTION_HELLO_WORLD> {
   return createAction<typeof ACTION_HELLO_WORLD>({
     type: ACTION_HELLO_WORLD,
     getIconType: () => 'lock',
     MenuItem: UiMenuItem,
     execute: async () => {
+      const overlays = (await getStartServices())[0].overlays;
       const flyoutSession = overlays.openFlyout(
         toMountPoint(
           <EuiFlyout ownFocus onClose={() => flyoutSession && flyoutSession.close()}>

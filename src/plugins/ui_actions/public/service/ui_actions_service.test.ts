@@ -158,7 +158,7 @@ describe('UiActionsService', () => {
     test('can register and get actions', async () => {
       const actions: ActionRegistry = new Map();
       const service = new UiActionsService({ actions });
-      const helloWorldAction = createHelloWorldAction({} as any);
+      const helloWorldAction = createHelloWorldAction(async () => ({} as any));
       const length = actions.size;
 
       service.registerAction(helloWorldAction);
@@ -169,7 +169,7 @@ describe('UiActionsService', () => {
 
     test('getTriggerCompatibleActions returns attached actions', async () => {
       const service = new UiActionsService();
-      const helloWorldAction = createHelloWorldAction({} as any);
+      const helloWorldAction = createHelloWorldAction(async () => ({} as any));
 
       service.registerAction(helloWorldAction);
 

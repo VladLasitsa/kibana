@@ -3,10 +3,12 @@
   "version": "0.0.1",
   "kibanaVersion": "kibana",
   "requiredPlugins": [
+    "visualizations",
     "embeddable",
     "inspector",
     "uiActions"
   ],
+  "optionalPlugins": [],
   "server": false,
   "ui": true
 }

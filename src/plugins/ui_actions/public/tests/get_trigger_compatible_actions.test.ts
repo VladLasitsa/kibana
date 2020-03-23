@@ -42,14 +42,14 @@ beforeEach(() => {
 
 test('can register action', async () => {
   const { setup } = uiActions;
-  const helloWorldAction = createHelloWorldAction({} as any);
+  const helloWorldAction = createHelloWorldAction(async () => ({} as any));
 
   setup.registerAction(helloWorldAction);
 });
 
 test('getTriggerCompatibleActions returns attached actions', async () => {
   const { setup, doStart } = uiActions;
-  const helloWorldAction = createHelloWorldAction({} as any);
+  const helloWorldAction = createHelloWorldAction(async () => ({} as any));
 
   setup.registerAction(helloWorldAction);
 

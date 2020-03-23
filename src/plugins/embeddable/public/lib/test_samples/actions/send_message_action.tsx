@@ -19,7 +19,7 @@
 import React from 'react';
 import { EuiFlyoutBody } from '@elastic/eui';
 import { createAction, IncompatibleActionError, ActionType } from '../../ui_actions';
-import { CoreStart } from '../../../../../../core/public';
+import { CoreSetup, CoreStart } from '../../../../../../core/public';
 import { toMountPoint } from '../../../../../kibana_react/public';
 import { Embeddable, EmbeddableInput } from '../../embeddables';
 import { GetMessageModal } from './get_message_modal';
@@ -36,8 +36,12 @@ interface ActionContext {
 
 const isCompatible = async (context: ActionContext) => hasFullNameOutput(context.embeddable);
 
-export function createSendMessageAction(overlays: CoreStart['overlays']) {
-  const sendMessage = async (context: ActionContext, message: string) => {
+export function createSendMessageAction(getStartServices: CoreSetup['getStartServices']) {
+  const sendMessage = async (
+    context: ActionContext,
+    message: string,
+    overlays: CoreStart['overlays']
+  ) => {
     const greeting = `Hello, ${context.embeddable.getOutput().fullName}`;
 
     const content = message ? `${greeting}. ${message}` : greeting;
@@ -52,6 +56,7 @@ export function createSendMessageAction(overlays: CoreStart['overlays']) {
       if (!(await isCompatible(context))) {
         throw new IncompatibleActionError();
       }
+      const overlays = (await getStartServices())[0].overlays;
 
       const modal = overlays.openModal(
         toMountPoint(
@@ -59,7 +64,7 @@ export function createSendMessageAction(overlays: CoreStart['overlays']) {
             onCancel={() => modal.close()}
             onDone={message => {
               modal.close();
-              sendMessage(context, message);
+              sendMessage(context, message, overlays);
             }}
           />
         )
