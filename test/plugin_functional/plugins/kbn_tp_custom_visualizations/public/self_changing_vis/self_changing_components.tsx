@@ -19,23 +19,23 @@
 
 import React from 'react';
 
-import { EuiFieldNumber, EuiFormRow } from '@elastic/eui';
+import { EuiBadge } from '@elastic/eui';
 
-export class SelfChangingEditor extends React.Component {
-  onCounterChange = ev => {
-    this.props.setValue('counter', parseInt(ev.target.value));
-  };
+interface SelfChangingComponentProps {
+  renderComplete: () => {};
+  vis: any;
+}
 
-  render() {
-    return (
-      <EuiFormRow label="Counter">
-        <EuiFieldNumber
-          value={this.props.stateParams.counter}
-          onChange={this.onCounterChange}
-          step={1}
-          data-test-subj="counterEditor"
-        />
-      </EuiFormRow>
-    );
-  }
+export function SelfChangingComponent(props: SelfChangingComponentProps) {
+  return (
+    <div>
+      <EuiBadge
+        data-test-subj="counter"
+        onClickAriaLabel="Increase counter"
+        color="primary"
+      >
+        {props.vis.params.counter}
+      </EuiBadge>
+    </div>
+  );
 }

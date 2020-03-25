@@ -17,10 +17,14 @@
  * under the License.
  */
 
-export default function(kibana) {
-  return new kibana.Plugin({
-    uiExports: {
-      hacks: ['plugins/kbn_tp_custom_visualizations/self_changing_vis/self_changing_vis'],
-    },
-  });
-}
+import { PluginInitializer } from 'kibana/public';
+import {
+  CustomVisualizationsPublicPlugin,
+  CustomVisualizationsSetup,
+  CustomVisualizationsStart,
+} from './plugin';
+
+export { CustomVisualizationsPublicPlugin as Plugin };
+
+export const plugin: PluginInitializer<CustomVisualizationsSetup, CustomVisualizationsStart> = () =>
+  new CustomVisualizationsPublicPlugin();
