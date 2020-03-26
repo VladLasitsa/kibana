@@ -23,18 +23,21 @@ import { EuiBadge } from '@elastic/eui';
 
 interface SelfChangingComponentProps {
   renderComplete: () => {};
-  vis: any;
+  visParams: {
+    counter: number;
+  };
 }
 
 export function SelfChangingComponent(props: SelfChangingComponentProps) {
   return (
     <div>
       <EuiBadge
+        onClick={() => {}}
         data-test-subj="counter"
         onClickAriaLabel="Increase counter"
         color="primary"
       >
-        {props.vis.params.counter}
+        {props.visParams.counter}
       </EuiBadge>
     </div>
   );

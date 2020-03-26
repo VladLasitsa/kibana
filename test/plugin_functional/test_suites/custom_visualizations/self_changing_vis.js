@@ -21,18 +21,13 @@ import expect from '@kbn/expect';
 
 export default function({ getService, getPageObjects }) {
   const testSubjects = getService('testSubjects');
-  const renderable = getService('renderable');
   const PageObjects = getPageObjects(['common', 'visualize', 'visEditor']);
 
   async function getCounterValue() {
     return await testSubjects.getVisibleText('counter');
   }
 
-  async function getEditorValue() {
-    return await testSubjects.getAttribute('counterEditor', 'value');
-  }
-
-  describe.skip('self changing vis', function describeIndexTests() {
+  describe('self changing vis', function describeIndexTests() {
     before(async () => {
       await PageObjects.visualize.navigateToNewVisualization();
       await PageObjects.visualize.clickVisType('self_changing_vis');
@@ -47,18 +42,6 @@ export default function({ getService, getPageObjects }) {
       await PageObjects.visEditor.clickGo();
       const counter = await getCounterValue();
       expect(counter).to.be('10');
-    });
-
-    it('should allow changing params from within the vis', async () => {
-      await testSubjects.click('counter');
-      await renderable.waitForRender();
-      const visValue = await getCounterValue();
-      expect(visValue).to.be('11');
-      const editorValue = await getEditorValue();
-      expect(editorValue).to.be('11');
-      // If changing a param from within the vis it should immediately apply and not bring editor in an unchanged state
-      const isApplyEnabled = await PageObjects.visEditor.isApplyEnabled();
-      expect(isApplyEnabled).to.be(false);
     });
   });
 }
